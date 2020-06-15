@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Tetris!</title>
+  <script src="js/app.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="menu-wrap">
+    <input type="checkbox" class="toggler">
+    <div class="hamburger">
+      <div></div>
+    </div>
+    <div class="menu">
+      <div class="menu-content">
+        <h2 class="t-ucase">rules</h2>
+        <p class="rules"> Please use the <b class="key">Q or W</b> to rotate your tetromino, and <b class="key">LEFT</b>
+          and <b class="key">RIGHT</b> to <br> move across the board. Pressing <b class="key">DOWN</b> will speed up the
+          tetromino.</p>
+          <p class="rules"> Tap the <b class="key">SPACEBAR</b> to pause game anytime </p>
+        <button class="button close fw-400">Start</button>
+      </div>
+    </div>
+  </div>
+  <header>
+    <h1 class="fw-300 t-ucase">Welcome <br><span class="fw-400 t-wide t-big t-ucase">to tetris</span></h1>
+  </header>
+  <main class="game-area">
+    <div class="game">
+      <!-- <div class="grid"></div> --> 
+      <canvas id="tetris" width="240" height="400"></canvas>
+      <script src="main.js"></script>
+    </div>
+    <section >
+      <div class="display border-white ">
+        <h1 class="score fw-400 t-ucase">Your Score <br> <span id="score" class="score-display t-ucase fw-300">0</span></h1>
+        <div class="nextup-shape">
+          <canvas class="nextup-grid"></canvas>
+        </div>
+        <h2 class="lines-display fw-400 t-ucase">Made with care 2020</h2>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
