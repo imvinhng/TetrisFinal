@@ -376,41 +376,45 @@ document.addEventListener('DOMContentLoaded', () => {
                       context.fillRect(x + offset.x,
                                       y + offset.y,
                                       1, 1);
+                      console.log('Original matrix '+ matrix)
                   
                   }
               });
           });
+          if (player.matrix!== null) {
+            drawMatrix_nextup(player.matrix_nextup, 20);
+          }
       }
 
-      function drawMatrix_nextup(matrix) {
+      function drawMatrix_nextup(matrix, offset) {
         matrix.forEach((row, y) => {
             row.forEach((value, x) => {
-                if (value !== 0) {
-                  nextup_context.fillStyle = colors[value];          
-                  nextup_context.fillRect(x + 20,
-                    y + 20,
-                    20, 20);
-                
-                }
-            });
-        });
+              if (value !== 0) {
+                // console.log(matrix)
+                nextup_context.fillStyle = colors[value];          
+                nextup_context.fillRect(x*offset + offset,
+                  y*offset + offset,
+                  20, 20);     
+                  
+                console.log('Nextup matrix '+ matrix)
+              }
 
-        drawMatrix(arena, {x: 0, y: 0});
-        drawMatrix(player.matrix, player.pos);
+
+            });
+        });     
     }
   
       function draw() {
-          
           context.fillStyle = '#003366';
           context.fillRect(0, 0, canvas.width-5, canvas.height-5);
   
           nextup_context.fillStyle = '#D7DBDD';
           nextup_context.fillRect(0, 0, 100, 100);
 
-
-
           // how the Matrix is drawn
-          drawMatrix_nextup(player.matrix);
+
+          drawMatrix(arena, {x: 0, y: 0});
+          drawMatrix(player.matrix, player.pos);
       }
   
       function merge(arena, player) {
@@ -448,9 +452,11 @@ document.addEventListener('DOMContentLoaded', () => {
           if (collide(arena, player)) {
               player.pos.y--;
               merge(arena, player);
+              player.matrix = player.matrix_nextup ;
               playerReset();
               arenaSweep();
               updateScore();
+              console.log('I touched the bottom')
           }
           dropCounter = 0;
       }
@@ -464,7 +470,10 @@ document.addEventListener('DOMContentLoaded', () => {
   
       function playerReset() {
           const pieces = 'TJLOSZI';
-          player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+          player.matrix_nextup = createPiece(pieces[pieces.length * Math.random() | 0]);
+          if (player.matrix === null) {
+              player.matrix = player.matrix_nextup;
+          }
           player.pos.y = 0;
           player.pos.x = (arena[0].length / 2 | 0) -
                         (player.matrix[0].length / 2 | 0);
@@ -543,6 +552,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
       const player = {
           pos: {x: 0, y: 0},
+          matrix_nextup : null,
           matrix: null,
           score: 0,
       };
