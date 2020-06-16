@@ -9,9 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
       startGame()
     })
 
-
-  
-
     // From Basics
     function startGame() {
       const canvas = document.getElementById('tetris');
@@ -21,7 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       context.scale(20, 20);
 
+    // since we created the matrix w numbers 1 -7, we need to start at index 1 -7 for colors as well
       const blocks = [];
+      blocks.push(null)
       document.querySelectorAll('img').forEach(img => {
           blocks.push(img)
       })
@@ -45,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       
-  
+    //   check if the piece collides with another piece or the arena
       function collide(arena, player) {
           const m = player.matrix;
           const o = player.pos;
@@ -120,8 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
           matrix.forEach((row, y) => {
               row.forEach((value, x) => {
                   if (value !== 0) {
-                    // var pat = context.createPattern(blocks[value], 'repeat');
-                    context.fillStyle = colors[value];          
+                    let pat = context.createPattern(blocks[value], 'repeat');
+                    context.fillStyle = pat;          
+                    // context.fillStyle = colors[value];          
                     context.fillRect(x + offset.x,
                                     y + offset.y,
                                     1, 1);  
@@ -137,8 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
         matrix.forEach((row, y) => {
             row.forEach((value, x) => {
               if (value !== 0) {
-                // var pat = nextup_context.createPattern(blocks[value], 'repeat');
-                nextup_context.fillStyle = colors[value];          
+                let pat = nextup_context.createPattern(blocks[value], 'repeat');
+                nextup_context.fillStyle = pat;
+                // nextup_context.fillStyle = colors[value];          
                 nextup_context.fillRect(x * offset + offset,
                                         y * offset + offset,
                                         20,20)  
@@ -156,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
           nextup_context.fillRect(0, 0, 100, 100);
 
           // how the Matrix is drawn
-
           drawMatrix(arena, {x: 0, y: 0});
           drawMatrix(player.matrix, player.pos);
       }
